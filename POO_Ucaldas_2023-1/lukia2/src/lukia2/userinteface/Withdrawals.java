@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
-public class Deposit extends JFrame {
+public class Withdrawals extends JFrame {
 
     Connection con = null;
     PreparedStatement pst = null;
@@ -22,7 +22,7 @@ public class Deposit extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Deposit frame = new Deposit();
+                    Withdrawals frame = new Withdrawals();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -31,7 +31,7 @@ public class Deposit extends JFrame {
         });
     }
 
-    public Deposit() {
+    public Withdrawals() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 657, 288);
         contentPane = new JPanel();
@@ -92,10 +92,10 @@ public class Deposit extends JFrame {
         desktopPane.add(saldoU);
         contentPane.setLayout(gl_contentPane);
 
-        JButton depositBtn = new JButton("Depositar");
-        depositBtn.setBounds(371, 162, 128, 36);
-        desktopPane.add(depositBtn);
-        depositBtn.addActionListener(new ActionListener() {
+        JButton withdrawalsBtn = new JButton("Retirar");
+        withdrawalsBtn.setBounds(371, 162, 128, 36);
+        desktopPane.add(withdrawalsBtn);
+        withdrawalsBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -106,15 +106,14 @@ public class Deposit extends JFrame {
 
                     if (rs.next()) {
                         int saldoActual = rs.getInt("saldo");
-                        int nuevoSaldo = saldoActual + Integer.parseInt(saldoU.getText());
+                        int nuevoSaldo = saldoActual - Integer.parseInt(saldoU.getText());
                         String updateQuery = "UPDATE user SET saldo = ? WHERE phone_Number = ?";
                         pst = con.prepareStatement(updateQuery);
                         pst.setInt(1, nuevoSaldo);
                         pst.setString(2, updateEntry.getText());
                         pst.executeUpdate();
-                        JOptionPane.showMessageDialog(null, "Saldo actualizado correctamente");
+                        JOptionPane.showMessageDialog(null, "Dinero retirado correctamente");
                         JOptionPane.showMessageDialog(null, "Nuevo saldo " + nuevoSaldo);
-
                         MenuA menu = new MenuA();
                         menu.show();
                         dispose();
@@ -142,8 +141,8 @@ public class Deposit extends JFrame {
             }
 
         });
-        depositBtn.setForeground(Color.BLACK);
-        depositBtn.setFont(new Font("Cocogoose", Font.BOLD, 14));
+        withdrawalsBtn.setForeground(Color.BLACK);
+        withdrawalsBtn.setFont(new Font("Cocogoose", Font.BOLD, 14));
 
     }
 }
