@@ -128,7 +128,7 @@ public class User extends JFrame {
         JDesktopPane desktopPane = new JDesktopPane();
         desktopPane.setBackground(Color.GRAY);
 
-        JButton btnNewButton = new JButton("Cancel");
+        JButton btnNewButton = new JButton("Cancelar");
         btnNewButton.setForeground(Color.BLACK);
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
